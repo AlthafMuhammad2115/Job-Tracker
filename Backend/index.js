@@ -5,6 +5,10 @@ require('dotenv').config()
 const mongoString = process.env.DATABASE_URL;
 const port =process.env.PORT;
 
+//routes
+const comapyRoutes=require('./routes/companies.routes');
+const jobRoutes=require('./routes/job.routes');
+
 //db
 
 mongoose.connect(mongoString)
@@ -31,6 +35,9 @@ app.use(cors({
 app.options('*', cors());
 
 app.use(express.json())
+
+app.use('/api/company',comapyRoutes);
+app.use('/api/job',jobRoutes);
 
 app.listen(port,()=>{
     console.log(`server started at port ${port}`);
