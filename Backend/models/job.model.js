@@ -56,4 +56,4 @@ JobApplicationSchema.pre('save', function (next) {
   next();
 });
 
-module.exports = mongoose.model('JobApplication', JobApplicationSchema);
+module.exports = mongoose.model('Jobs', JobApplicationSchema);

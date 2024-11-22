@@ -6,8 +6,10 @@ const mongoString = process.env.DATABASE_URL;
 const port =process.env.PORT;
 
 //routes
-const comapyRoutes=require('./routes/companies.routes');
+const companyRoutes=require('./routes/companies.routes');
 const jobRoutes=require('./routes/job.routes');
+const userRoutes=require('./routes/user.routes');
+const applicationRoutes=require('./routes/applications.routes');
 
 //db
 
@@ -36,8 +38,10 @@ app.options('*', cors());
 
 app.use(express.json())
 
-app.use('/api/company',comapyRoutes);
+app.use('/api/company',companyRoutes);
 app.use('/api/job',jobRoutes);
+app.use('/api/user',userRoutes);
+app.use('/api/application',applicationRoutes);
 
 app.listen(port,()=>{
     console.log(`server started at port ${port}`);
