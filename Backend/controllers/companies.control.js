@@ -43,7 +43,7 @@ exports.login=async (req,res)=>{
             const IsPresent=await bcrypt.compare(password,company.password);
 
             if(IsPresent){
-                res.status(200).json({token:generateTokenResponse(company),status:200,result:'FOUND',username:company.company_name,userId:company._id})
+                res.status(200).json({token:generateTokenResponse(company),status:200})
             }else{
                 res.json({status:302,result:'Password Mismatch'})
             }

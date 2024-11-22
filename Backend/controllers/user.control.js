@@ -44,7 +44,7 @@ exports.login = async (req, res) => {
             const IsPresent = await bcrypt.compare(password, user.password);
 
             if (IsPresent) {
-                res.status(200).json({ token: generateTokenResponse(user), status: 200, result: 'FOUND', username: user.username, userId: user._id })
+                res.status(200).json({ token: generateTokenResponse(user), status: 200, result: 'FOUND'})
             } else {
                 res.json({ status: 302, result: 'Password Mismatch' })
             }
