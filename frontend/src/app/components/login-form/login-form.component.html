@@ -1,0 +1,98 @@
+<div class="container d-flex justify-content-center align-items-center rounded">
+  <div class="card shadow-lg border-0 p-4" style="max-width: 600px; width: 100%;">
+    <ul class="nav nav-tabs mb-3" id="auth-tabs" role="tablist">
+      <!-- Login Tab -->
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          [ngClass]="{ active: !isSignUpMode }"
+          id="login-tab"
+          data-bs-toggle="tab"
+          type="button"
+          (click)="switchMode(false)"
+        >
+          Log In
+        </button>
+      </li>
+      <!-- Sign-up Tab -->
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          [ngClass]="{ active: isSignUpMode }"
+          id="signup-tab"
+          data-bs-toggle="tab"
+          type="button"
+          (click)="switchMode(true)"
+        >
+          Sign Up
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- Login Form -->
+      <div class="tab-pane fade" [ngClass]="{ show: !isSignUpMode, active: !isSignUpMode }" id="login">
+        <h3 class="text-center mb-4">Log In</h3>
+        <p class="text-muted text-center mb-4">1,50,000+ companies hiring on our platform</p>
+        <form>
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="loginEmail"
+              placeholder="john@example.com"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="loginPassword"
+              placeholder="Enter your password"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Log In</button>
+        </form>
+      </div>
+
+      <!-- Sign-up Form -->
+      <div class="tab-pane fade" [ngClass]="{ show: isSignUpMode, active: isSignUpMode }" id="signup">
+        <h3 class="text-center mb-4">Sign Up</h3>
+        <p class="text-muted text-center mb-4">Create an account to get started</p>
+        <form>
+          <div class="mb-3">
+            <label for="signupEmail" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="signupEmail"
+              placeholder="john@example.com"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="signupPassword" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="signupPassword"
+              placeholder="Enter your password"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="signupConfirmPassword"
+              placeholder="Re-enter your password"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.labels li{
+    list-style-type: none;
+}
+.line{
+    border: 1px grey solid;
+}
+.skill{
+    background-color: whitesmoke;
+    border-radius: 15px;
+}
+.skillset{
+    width: fit-content;
+}

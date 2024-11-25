@@ -1,0 +1,8 @@
+/* Optional styling for consistency */
+.filter-box {
+  max-width: 500px;
+  margin: auto;
+}
+.filter-title {
+  font-weight: bold;
+}

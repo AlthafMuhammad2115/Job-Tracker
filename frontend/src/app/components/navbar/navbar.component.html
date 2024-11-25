@@ -1,0 +1,17 @@
+<div class="main col-12 d-flex py-3 border">
+  <div class="logo col-2 d-flex justify-content-center">
+    <h1><span class="text-primary">Job</span><span>Seeker</span></h1>
+  </div>
+  <div class="labels col-5 pt-3  d-flex justify-content-center">
+    <div class="col-8">
+      <ul class="col-12 d-flex align-items-baseline justify-content-evenly">
+        <li routerLink="home" [routerLinkActive]="'active_class'">Dashboard</li>
+        <li routerLink="application" routerLinkActive="active_class">Applications</li>
+      </ul>
+    </div>
+  </div>
+  <div class="profile col-5 d-flex justify-content-end align-items-center pe-5">
+    <button routerLink="login" class="btn btn-primary h-75 me-3">Candidate Sign-up</button>
+    <button routerLink="adminlogin" class="btn btn-primary h-75 me-3">Employee Sign-up</button>
+  </div>
+</div>

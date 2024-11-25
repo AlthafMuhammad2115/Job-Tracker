@@ -1,0 +1,7 @@
+.status_message h1:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+.active{
+    background-color: whitesmoke;
+}

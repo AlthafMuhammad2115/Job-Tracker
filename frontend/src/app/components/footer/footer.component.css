@@ -1,0 +1,27 @@
+.footer {
+  background-color: #f8f9fa; /* Light background matching JobSeeker theme */
+  border-top: 1px solid #000; /* Black border to separate the footer */
+}
+
+.footer h5 {
+  color: #007bff; /* Matches JobSeeker's primary blue theme */
+  font-weight: bold;
+}
+
+.footer a {
+  color: #000; /* Text-dark links for a clean, consistent look */
+  transition: color 0.3s ease-in-out;
+}
+
+.footer a:hover {
+  color: #007bff; /* Blue on hover for links */
+}
+
+.footer .text-muted {
+  color: #6c757d; /* Bootstrap muted text color */
+}
+
+.text-center {
+  font-size: 0.9rem;
+  color: #333;
+}

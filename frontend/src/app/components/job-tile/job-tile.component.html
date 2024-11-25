@@ -1,0 +1,39 @@
+<div class="main container d-flex mb-3">
+  <div
+    class="d-flex col-12 flex-column border rounded py-3 px-2 position-relative"
+  >
+    <div class="position-absolute icon">
+      <!-- <button class="btn btn-outline-dark rounded-0">N</button> -->
+      <img
+        src="https://imgs.search.brave.com/1PiSgXJf6p3fPYyv0Xr6VcujYpFZbh1-v6zEqGx_9M0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jbG91/ZGZyb250LXVzLWVh/c3QtMi5pbWFnZXMu/YXJjcHVibGlzaGlu/Zy5jb20vcmV1dGVy/cy80NjZCSkpRN1BW/R1k1TzUzTlozS0w2/NU1ITS5wbmc"
+        alt=""
+        width="100"
+      />
+    </div>
+    <div class="job_title">
+      <p class="h4">Software Engineer</p>
+    </div>
+    <div class="company_name">
+      <p class="h5">Nogency</p>
+    </div>
+    <div class="labels col-8 pt-2">
+      <ul class="d-flex justify-content-between">
+        <li>
+          <span><i class="bi bi-geo-alt"></i></span><span>Bangalore,India</span>
+        </li>
+        <li>
+          <span><i class="bi bi-cash-coin"></i></span><span>15000</span>
+        </li>
+        <li>
+          <span><i class="bi bi-person"></i></span><span>5 openings</span>
+        </li>
+      </ul>
+    </div>
+    <div class="buttons col-12 d-flex justify-content-end">
+      <button class="btn btn-primary" [routerLink]="route1">
+        DETIALS <i class="bi bi-info-circle"></i>
+      </button>
+      <button class="ms-3 btn btn-primary" [routerLink]="route2">{{btnName}}</button>
+    </div>
+  </div>
+</div>

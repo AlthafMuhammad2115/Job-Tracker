@@ -1,0 +1,19 @@
+.labels li{
+    list-style-type: none;
+    cursor: pointer;
+    padding: 0px 10px;
+    border-bottom: 3px white solid;
+
+}
+.labels li:hover{
+    border-bottom: 3px blue solid;
+    padding: 0px 10px;
+}
+.active_class{
+    border-bottom: 3px blue solid !important;
+}
+
+.main{
+    z-index: 1000;
+    background-color: white;
+}
