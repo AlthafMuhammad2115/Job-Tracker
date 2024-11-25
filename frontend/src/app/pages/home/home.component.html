@@ -1,9 +1,19 @@
 <div class="container main d-flex py-3">
-    <app-filter-box class="col-4 postion-sticky top-0"></app-filter-box>
-    <div class="d-flex flex-column col-8">
-    <app-job-tile btnName="APPLY NOW" route1="/moredetials"></app-job-tile>
-    <app-job-tile btnName="APPLY NOW"></app-job-tile>
-    <app-job-tile btnName="APPLY NOW"></app-job-tile>
-
+  <app-filter-box class="col-4 postion-sticky top-0"></app-filter-box>
+  <div class="d-flex flex-column col-8">
+    <div *ngFor="let item of jobarray">
+      <app-job-tile
+        [role]="item.job_title"
+        [company]="item.company_name"
+        [location]="item.location"
+        [salary]="item.salary"
+        [post]="item.post_no"
+        btnName="APPLY NOW"
+        [route1]="['/moredetials/',item._id]"
+        [job_id]="item._id"
+        [company_id]="item.company_id"
+      ></app-job-tile>
     </div>
+  </div> 
 </div>
+ 

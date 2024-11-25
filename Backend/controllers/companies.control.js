@@ -4,6 +4,7 @@ const jwt=require('jsonwebtoken')
 const jwt_key=process.env.JWTTOKEN_KEY ;
 
 const companySignUpModel=require('../models/companies.model')
+const Job=require('../models/job.model')
 
 exports.signup=async (req,res)=>{
 
@@ -43,7 +44,7 @@ exports.login=async (req,res)=>{
             const IsPresent=await bcrypt.compare(password,company.password);
 
             if(IsPresent){
-                res.status(200).json({token:generateTokenResponse(company),status:200})
+                res.status(200).json({token:generateTokenResponse(company),status:200,userid:company._id,company_name:company.company_name})
             }else{
                 res.json({status:302,result:'Password Mismatch'})
             }
@@ -59,3 +60,32 @@ generateTokenResponse=(company)=>{
     const token= jwt.sign({data:company},jwt_key,{expiresIn:'30d'});
     return token;
 }
+
+exports.list_company_job= async (req, res) => {
+    try {
+      const { companyId } = req.params;
+  
+      // Find all jobs posted by the specified company
+      const jobs = await Job.find({ company_id: companyId });
+  
+      // If no jobs are found
+      if (!jobs || jobs.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'No jobs found for this company',
+        });
+      }
+  
+      // Respond with the list of jobs
+      res.status(200).json({
+        success: true,
+        jobs,
+      });
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).json({
+        success: false,
+        message: 'Server error while fetching jobs',
+      });
+    }
+  }

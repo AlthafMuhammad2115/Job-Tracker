@@ -1,9 +1,13 @@
 <div class="main col-6 mx-auto my-3 d-flex flex-column">
   <h1 class="h3 py-2"><span>My </span><span class="text-primary">Applications</span></h1>
-  <div>
-    <app-status-tile></app-status-tile> 
-    <app-status-tile></app-status-tile>
-    <app-status-tile></app-status-tile>
-    <app-status-tile></app-status-tile>
+  <div class="d-flex flex-column">
+    <div *ngFor="let item of applicationarray">
+      <app-status-tile
+      [role]="item.job_title"
+      [company]="item.company_name"
+      [status]="item.status"
+    ></app-status-tile> 
+    </div>
+    
   </div>
 </div>

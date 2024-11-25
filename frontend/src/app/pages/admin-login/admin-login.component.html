@@ -1,4 +1,222 @@
-<div class="py-3 d-flex flex-column align-item-center justify-content-center col-12">
-    <h1  class="text-center h3 py-2">Login As a <span class="h2 text-primary">Company</span>  In <span class="h2 text-primary">Job</span ><span class="h2">Seeker</span>...</h1>
-    <app-login-form></app-login-form>
+<div
+  class="py-3 d-flex flex-column align-item-center justify-content-center col-12"
+>
+  <h1 class="text-center h3 py-2">
+    Login As a <span class="h2 text-primary">Company</span> In
+    <span class="h2 text-primary">Job</span><span class="h2">Seeker</span>...
+  </h1>
+  <div
+    class="container d-flex justify-content-center align-items-center rounded"
+  >
+    <div
+      class="card shadow-lg border-0 p-4"
+      style="max-width: 600px; width: 100%"
+    >
+      <ul class="nav nav-tabs mb-3" id="auth-tabs" role="tablist">
+        <!-- Login Tab -->
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            [ngClass]="{ active: !isSignUpMode }"
+            id="login-tab"
+            data-bs-toggle="tab"
+            type="button"
+            (click)="switchMode(false)"
+          >
+            Log In
+          </button>
+        </li>
+        <!-- Sign-up Tab -->
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            [ngClass]="{ active: isSignUpMode }"
+            id="signup-tab"
+            data-bs-toggle="tab"
+            type="button"
+            (click)="switchMode(true)"
+          >
+            Sign Up
+          </button>
+        </li>
+      </ul>
+
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Login Form -->
+        <div
+          class="tab-pane fade"
+          [ngClass]="{ show: !isSignUpMode, active: !isSignUpMode }"
+          id="login"
+        >
+          <h3 class="text-center mb-4">Log In</h3>
+          <p class="text-muted text-center mb-4">
+            1,50,000+ companies hiring on our platform
+          </p>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onsubmit()">
+            <p class="h6 text-danger text-center">{{loginMessage}}</p>
+
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="loginEmail"
+                formControlName="email"
+                placeholder="john@example.com"
+                [ngClass]="{ 'is-invalid': submit && f.email.errors }"
+              />
+            </div>
+
+            <div *ngIf="submit && f.email.errors">
+              <div *ngIf="f.email.errors['required']" class="warn text-danger">
+                Field required
+              </div>
+              <div *ngIf="f.email.errors['email']" class="warn text-danger">
+                Invalid Format
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="loginPassword"
+                formControlName="password"
+                placeholder="Enter your password"
+                [ngClass]="{ 'is-invalid': submit && f.password.errors }"
+              />
+            </div>
+            <div *ngIf="submit && f.password.errors">
+              <div
+                *ngIf="f.password.errors['required']"
+                class="warn text-danger"
+              >
+                Field required
+              </div>
+              <div
+                *ngIf="f.password.errors['minLength']"
+                class="warn text-danger"
+              >
+                Minimum length is 6
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Log In</button>
+          </form>
+        </div>
+
+        <!-- Sign-up Form -->
+        <div
+          class="tab-pane fade"
+          [ngClass]="{ show: isSignUpMode, active: isSignUpMode }"
+          id="signup"
+        >
+          <h3 class="text-center mb-4">Sign Up</h3>
+          <p class="text-muted text-center mb-4">
+            Create an account to get started
+          </p>
+          <form [formGroup]="signupForm" (ngSubmit)="onsubmitsignup()">
+
+            <p class="h6 text-danger text-center">{{signupMessage}}</p>
+            <div class="mb-3">
+              <label class="form-label">company name</label>
+              <input
+                type="company name"
+                class="form-control"
+                placeholder="Enter company name"
+                formControlName="company"
+                [ngClass]="{
+                  'is-invalid': submitsignup && fsignup.company.errors
+                }"
+              />
+              <div *ngIf="submitsignup && fsignup.company.errors">
+                <div
+                  *ngIf="fsignup.company.errors['required']"
+                  class="warn text-danger"
+                >
+                  Field required
+                </div>
+                <div
+                  *ngIf="fsignup.company.errors['minLength']"
+                  class="warn text-danger"
+                >
+                  minimum length is 6
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="signupEmail" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="signupEmail"
+                placeholder="john@example.com"
+                formControlName="email"
+                [ngClass]="{
+                  'is-invalid': submitsignup && fsignup.email.errors
+                }"
+              />
+              <div *ngIf="submitsignup && fsignup.email.errors">
+                <div
+                  *ngIf="fsignup.email.errors['required']"
+                  class="warn text-danger"
+                >
+                  Field required
+                </div>
+                <div
+                  *ngIf="fsignup.email.errors['email']"
+                  class="warn text-danger"
+                >
+                  Invalid Format
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="signupPassword" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="signupPassword"
+                placeholder="Enter your password"
+                formControlName="password"
+                [ngClass]="{
+                  'is-invalid': submitsignup && fsignup.password.errors
+                }"
+              />
+              <div *ngIf="submitsignup && fsignup.password.errors">
+                <div
+                  *ngIf="fsignup.password.errors['required']"
+                  class="warn text-danger"
+                >
+                  Field required
+                </div>
+              </div>
+            </div>
+
+
+            <div class="mb-3">
+              <label for="signupConfirmPassword" class="form-label"
+                >Confirm Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Re-enter your password"
+                formControlName="confirmPass"
+                [ngClass]="{
+                  'is-invalid': submitsignup && fsignup.confirmPass.errors
+                }"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-status-tile',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './status-tile.component.css'
 })
 export class StatusTileComponent {
-
+  @Input() role!:string;
+  @Input() company!:string;
+  @Input() status!:string;
 }

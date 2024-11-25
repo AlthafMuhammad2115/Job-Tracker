@@ -1,0 +1,5 @@
+/* Minimal CSS */
+.tab-content .tab-pane {
+    transition: opacity 0.3s ease-in-out;
+  }
+  

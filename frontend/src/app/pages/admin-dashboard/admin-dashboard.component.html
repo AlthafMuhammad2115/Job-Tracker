@@ -5,7 +5,7 @@
       alt=""
       width="100"
     />
-    <h1 class="mt-1">Nogency</h1>
+    <h1 class="mt-1">{{company_name}}</h1>
   </div>
   <div class="d-flex flex-column align-items-center mb-2">
     <button class="btn btn-primary py-3" routerLink="/postjob">
@@ -22,9 +22,17 @@
     </div>
   </div>
   <div class="d-flex flex-column">
-    <app-job-tile btnName="Applicants" route1="/adminJobDetials" route2="/viewApplicants"></app-job-tile>
-    <app-job-tile btnName="Applicants"></app-job-tile>
-    <app-job-tile btnName="Applicants"></app-job-tile>
-    <app-job-tile btnName="Applicants"></app-job-tile>
+    <div *ngFor="let item of jobarray">
+      <app-job-tile
+        btnName="Applicants"
+        [route1]="['/adminJobDetials/',item.job_id]"
+        route2="/viewApplicants"
+        [role]="item.job_title"
+        [company]="item.company_name"
+        [location]="item.location"
+        [salary]="item.salary"
+        [post]="item.post_no"
+      ></app-job-tile>
+    </div>
   </div>
 </div>

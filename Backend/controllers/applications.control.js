@@ -25,7 +25,7 @@ exports.add_applicant = async (req, res) => {
         );
 
         if (isAlreadyApplied) {
-            return res.status(400).json({
+            return res.status(201).json({
                 message: 'User has already applied for this job',
             });
         }

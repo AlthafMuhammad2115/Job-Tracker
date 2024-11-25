@@ -7,34 +7,40 @@
     />
   </div>
   <div class="role">
-    <h1>Software Engineer</h1>
+    <h1>{{menudata[0].job_title}}</h1>
   </div>
   <div class="company_name">
-    <h1 class="h3">Nogency</h1>
+    <h1 class="h3">{{menudata[0].company_name}}</h1>
   </div>
   <div class="location">
-    <span><i class="bi bi-geo-alt"></i></span><span>Bangalore,India</span>
+    <span><i class="bi bi-geo-alt"></i></span><span>{{menudata[0].location}}</span>
   </div>
 
-  <div class="labels col-8 pt-3">
+  <div class="labels col-12 pt-3">
     <ul class="d-flex justify-content-between">
       <li class="d-flex flex-column">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>salary</span>
         </div>
-        <div>15000</div>
+        <div>{{menudata[0].salary | currency:'INR':'symbol':'1.0-0'}}/Month</div>
       </li>
       <li class="d-flex flex-column">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>openings</span>
         </div>
-        <div>6</div>
+        <div>{{menudata[0].post_no}}</div>
       </li>
       <li class="d-flex flex-column">
         <div>
-          <span><i class="bi bi-geo-alt"></i></span><span>Appied date</span>
+          <span><i class="bi bi-geo-alt"></i></span><span>Posted date</span>
         </div>
-        <div>25/10/2024</div>
+        <div>{{postdate}}</div>
+      </li>
+      <li class="d-flex flex-column">
+        <div>
+          <span><i class="bi bi-geo-alt"></i></span><span>Last date</span>
+        </div>
+        <div>{{lastdate}}</div>
       </li>
     </ul>
   </div>
@@ -43,26 +49,19 @@
 
   <div class="notes py-3">
     <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed natus
-      mollitia deleniti sit beatae delectus tempora autem et sapiente iste
-      officia minima veniam aspernatur alias, fugit quo qui laborum quod!
+      {{menudata[0].notes}}
     </p>
   </div>
 
   <div class="line"></div>
   <div class="skillset col-6 py-3">
     <div class=" col-12 py-3 d-flex flex-wrap">
-        <p class="skill px-2 mx-1">HTML</p>
-      <p class="skill px-2 mx-1">CSS</p>
-      <p class="skill px-2 mx-1">Javascript</p>
-      <p class="skill px-2 mx-1">Node js</p>
-      <p class="skill px-2 mx-1">Express</p>
-      <p class="skill px-2 mx-1">Mongodb</p>
+      <p *ngFor="let item of menudata[0].skill" class="skill px-2 mx-1">{{item}}</p>
     </div>
 
       
   </div>
   <div class="buttons col-12 d-flex justify-content-start">
-    <button class="ms-3 btn btn-primary">APPLY NOW</button>
+    <button class="ms-3 btn btn-primary" (click)="applynow(menudata[0]._id,menudata[0].company_id)">APPLY NOW</button>
   </div>
 </div>

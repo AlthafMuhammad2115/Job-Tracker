@@ -11,21 +11,21 @@
       />
     </div>
     <div class="job_title">
-      <p class="h4">Software Engineer</p>
+      <p class="h4">{{role}}</p>
     </div>
     <div class="company_name">
-      <p class="h5">Nogency</p>
+      <p class="h5">{{company}}</p>
     </div>
     <div class="labels col-8 pt-2">
       <ul class="d-flex justify-content-between">
         <li>
-          <span><i class="bi bi-geo-alt"></i></span><span>Bangalore,India</span>
+          <span><i class="bi bi-geo-alt"></i></span><span>{{location}}</span>
         </li>
         <li>
-          <span><i class="bi bi-cash-coin"></i></span><span>15000</span>
+          <span><i class="bi bi-cash-coin"></i></span><span>{{salary}}</span>
         </li>
         <li>
-          <span><i class="bi bi-person"></i></span><span>5 openings</span>
+          <span><i class="bi bi-person"></i></span><span>{{post}}</span>
         </li>
       </ul>
     </div>
@@ -33,7 +33,7 @@
       <button class="btn btn-primary" [routerLink]="route1">
         DETIALS <i class="bi bi-info-circle"></i>
       </button>
-      <button class="ms-3 btn btn-primary" [routerLink]="route2">{{btnName}}</button>
+      <button class="ms-3 btn btn-primary" [routerLink]="route2" (click)="applynow()">{{btnName}}</button>
     </div>
   </div>
 </div>
