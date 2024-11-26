@@ -81,6 +81,7 @@ exports.list_applicants = async (req, res) => {
             {
                 $project: {
                     _id: 0,
+                    userid: '$userDetails._id',
                     username: '$userDetails.username',
                     email: '$userDetails.email',
                     status: '$applicants.status',

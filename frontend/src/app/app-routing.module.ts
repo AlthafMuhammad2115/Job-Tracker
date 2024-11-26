@@ -19,7 +19,7 @@ const routes: Routes = [
   {path:'application',component:StatusComponent},
   {path:'adminDashboard/:id',component:AdminDashboardComponent},
   {path:'adminJobDetials/:job_id',component:AdminJobDetialsComponent},
-  {path:'viewApplicants',component:ViewApplicantsComponent},
+  {path:'viewApplicants/:job_id',component:ViewApplicantsComponent},
   {path:'postjob',component:PostJobComponent},
   {path:'editpost',component:PostJobComponent},
 ];

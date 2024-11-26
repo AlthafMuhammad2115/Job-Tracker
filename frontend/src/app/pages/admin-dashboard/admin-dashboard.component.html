@@ -26,7 +26,7 @@
       <app-job-tile
         btnName="Applicants"
         [route1]="['/adminJobDetials/',item.job_id]"
-        route2="/viewApplicants"
+        [route2]="['/viewApplicants/',item.job_id]"
         [role]="item.job_title"
         [company]="item.company_name"
         [location]="item.location"

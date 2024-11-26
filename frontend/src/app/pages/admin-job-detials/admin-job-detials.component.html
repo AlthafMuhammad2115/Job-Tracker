@@ -1,48 +1,45 @@
 <div class="main d-flex flex-column py-4 col-6 mx-auto">
     <div class="buttons col-12 d-flex justify-content-end">
         <button class="btn btn-primary" routerLink="/editpost">Edit <i class="bi bi-pencil-square"></i></button>
-        <button class="btn btn-primary ms-3">Delete <i class="bi bi-trash-fill"></i></button>
+        <button class="btn btn-primary ms-3" (click)="deletejob(menudata[0]._id)">Delete <i class="bi bi-trash-fill"></i></button>
       </div>
 </div>
 
 
 <div class="main d-flex flex-column p-4 col-6 mx-auto border mb-3 rounded">
-  <div class="logo">
-    <img
-      src="https://imgs.search.brave.com/shj8Cok3VqdrSNMgNT_jF0mDxildv4NtjM61ngoMQh8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy85/Lzk2L01pY3Jvc29m/dF9sb2dvXygyMDEy/KS5zdmc"
-      alt=""
-      width="200"
-    />
-  </div>
+
   <div class="role">
-    <h1>Software Engineer</h1>
-  </div>
-  <div class="company_name">
-    <h1 class="h3">Nogency</h1>
+    <h1>{{menudata[0].job_title}}</h1>
   </div>
   <div class="location">
-    <span><i class="bi bi-geo-alt"></i></span><span>Bangalore,India</span>
+    <span><i class="bi bi-geo-alt"></i></span><span>{{menudata[0].location}}</span>
   </div>
 
-  <div class="labels col-8 pt-3">
+  <div class="labels col-12 pt-3">
     <ul class="d-flex justify-content-between">
       <li class="d-flex flex-column">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>salary</span>
         </div>
-        <div>15000</div>
+        <div>{{menudata[0].salary| currency:'INR'}}</div>
       </li>
       <li class="d-flex flex-column">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>openings</span>
         </div>
-        <div>6</div>
+        <div>{{menudata[0].post_no}}</div>
       </li>
       <li class="d-flex flex-column">
         <div>
-          <span><i class="bi bi-geo-alt"></i></span><span>Appied date</span>
+          <span><i class="bi bi-geo-alt"></i></span><span>Post date</span>
         </div>
-        <div>25/10/2024</div>
+        <div>{{postdate}}</div>
+      </li>
+      <li class="d-flex flex-column">
+        <div>
+          <span><i class="bi bi-geo-alt"></i></span><span>Last date</span>
+        </div>
+        <div>{{lastdate}}</div>
       </li>
     </ul>
   </div>
@@ -51,21 +48,15 @@
 
   <div class="notes py-3">
     <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed natus
-      mollitia deleniti sit beatae delectus tempora autem et sapiente iste
-      officia minima veniam aspernatur alias, fugit quo qui laborum quod!
+      {{menudata[0].notes}}
     </p>
   </div>
 
   <div class="line"></div>
   <div class="skillset col-6 py-3">
     <div class="col-12 py-3 d-flex flex-wrap">
-      <p class="skill px-2 mx-1">HTML</p>
-      <p class="skill px-2 mx-1">CSS</p>
-      <p class="skill px-2 mx-1">Javascript</p>
-      <p class="skill px-2 mx-1">Node js</p>
-      <p class="skill px-2 mx-1">Express</p>
-      <p class="skill px-2 mx-1">Mongodb</p>
+      <p class="skill px-2 mx-1" *ngFor="let item of menudata[0].skill">{{item}}</p>
+      
     </div>
   </div>
 </div>

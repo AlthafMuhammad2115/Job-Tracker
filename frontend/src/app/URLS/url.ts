@@ -18,6 +18,8 @@ export const USER_APPLICATION=USER_URL+"/applicant"
 
 //application
 export const ADD_APPLICANT=APPLICATION_URL+"/add_applicant"
+export const LIST_APPLICANT=APPLICATION_URL+"/list_applicants"
+export const UPDATE_APPLICANT_STATUS=APPLICATION_URL+"/update_status"
 
 //admin
 export const ADMIN_LOGIN=ADMIN_URL+'/login'

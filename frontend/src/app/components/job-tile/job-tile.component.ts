@@ -25,10 +25,12 @@ export class JobTileComponent {
   applynow(){
     let user: any;
     let admin: any;
-    if (this.userserv.getUserFromLocalStorage('user')) {
+    admin = this.adminserv.getUserFromLocalStorage('admin');
+    user = this.userserv.getUserFromLocalStorage('user');
+
+    if (user) {
       user = this.userserv.getUserFromLocalStorage('user').userid;
-      admin = this.adminserv.getUserFromLocalStorage('admin').userid;
-    } else if(!user && !admin) {
+    } else if(!admin && !user ) {
       this.route.navigateByUrl('/login');
       return;
     }
