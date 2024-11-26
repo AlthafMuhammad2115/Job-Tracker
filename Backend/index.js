@@ -31,7 +31,7 @@ const app=express();
 
 app.use(cors({
     credentials:true,
-    origin: ["*","http://localhost:4200"]
+    origin: ["http://localhost:4200","https://job-seeker-git-master-muhammad-althafs-projects.vercel.app"]
 }))
 
 app.options('*', cors());

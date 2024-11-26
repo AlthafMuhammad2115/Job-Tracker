@@ -35,7 +35,6 @@ export class NavbarComponent {
     this.adminserv.removeUserFromLocalStorage('admin')
     this.IsAdminlogged=this.adminserv.getUserFromLocalStorage('admin')
     this.route.navigateByUrl('/home')
-    window.location.reload();
   }
   
   

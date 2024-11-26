@@ -1,4 +1,4 @@
-export const BASE_URL="http://localhost:3000"
+export const BASE_URL="https://job-seeker-backend-x4r7.onrender.com"
 
 export const ADMIN_URL=BASE_URL+"/api/company"
 export const USER_URL=BASE_URL+"/api/user"
