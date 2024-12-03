@@ -113,7 +113,6 @@ delete_job_application = async (req, res,next) => {
 
 filterJobs = async (req, res,next) => {
     try {
-        throw new Error();
       const { location, skill, salary } = req.body;
   
       const query = {};
