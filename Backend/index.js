@@ -1,29 +1,24 @@
 const express=require('express')
-const mongoose=require('mongoose')
 const cors=require('cors')
 require('dotenv').config()
-const mongoString = process.env.DATABASE_URL;
 const port =process.env.PORT;
-
+const {connectDB}=require('./config/db')
 //routes
 const companyRoutes=require('./routes/companies.routes');
 const jobRoutes=require('./routes/job.routes');
 const userRoutes=require('./routes/user.routes');
 const applicationRoutes=require('./routes/applications.routes');
 
+
+const {InitSentry}=require('./config/config')
+const Sentry = require('@sentry/node');
+
+
+//middlewares
+const{errorHandler}=require('./middlewares/error.middleware')
 //db
 
-mongoose.connect(mongoString)
-const database= mongoose.connection
-
-database.on('error',error=>{
-    console.log(error);
-})
-
-database.once('connected',()=>{
-    console.log('Db Connected');
-})
-
+connectDB()
 
 const app=express();
 
@@ -36,13 +31,25 @@ app.use(cors({
 
 app.options('*', cors());
 
+ InitSentry();
+
 app.use(express.json())
+
+
 
 app.use('/api/company',companyRoutes);
 app.use('/api/job',jobRoutes);
 app.use('/api/user',userRoutes);
 app.use('/api/application',applicationRoutes);
 
+  
+app.use(errorHandler);
+
+
+app.use((err, req, res, next) => {
+    Sentry.captureException(err);
+    next(err);
+});
 app.listen(port,()=>{
     console.log(`server started at port ${port}`);
 })

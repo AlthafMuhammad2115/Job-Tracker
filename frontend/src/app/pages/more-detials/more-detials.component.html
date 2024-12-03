@@ -1,7 +1,7 @@
-<div class="main d-flex flex-column p-4 col-6 mx-auto border my-5 rounded">
+<div class="main d-flex flex-column p-4 col-md-6 col-11 mx-auto border my-5  rounded">
   <div class="logo">
     <img
-      src="https://imgs.search.brave.com/shj8Cok3VqdrSNMgNT_jF0mDxildv4NtjM61ngoMQh8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy85/Lzk2L01pY3Jvc29m/dF9sb2dvXygyMDEy/KS5zdmc"
+      src="../../../assets/micrologo.webp"
       alt=""
       width="200"
     />
@@ -17,26 +17,26 @@
   </div>
 
   <div class="labels col-12 pt-3">
-    <ul class="d-flex justify-content-between">
-      <li class="d-flex flex-column">
+    <ul class="d-flex justify-content-between flex-wrap ps-0 ps-md-3">
+      <li class="d-flex flex-column my-2 my-md-0">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>salary</span>
         </div>
         <div>{{menudata[0].salary | currency:'INR':'symbol':'1.0-0'}}/Month</div>
       </li>
-      <li class="d-flex flex-column">
+      <li class="d-flex flex-column my-2 my-md-0">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>openings</span>
         </div>
         <div>{{menudata[0].post_no}}</div>
       </li>
-      <li class="d-flex flex-column">
+      <li class="d-flex flex-column my-2 my-md-0">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>Posted date</span>
         </div>
         <div>{{postdate}}</div>
       </li>
-      <li class="d-flex flex-column">
+      <li class="d-flex flex-column my-2 my-md-0">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>Last date</span>
         </div>

@@ -1,39 +1,30 @@
-<div class="container postion-sticky ">
-  <div class="filter-box p-4 border rounded-3 shadow-sm">
+<div class="container">
+  <div class="filter-box bg-white p-4 border rounded-3 shadow-sm">
+    <ng-content select="[close]"></ng-content>
+
     <h4 class="filter-title mb-4 text-primary">Filter Jobs</h4>
     <form>
-      <!-- Role -->
-      <div class="mb-3">
-        <label for="jobRole" class="form-label">Role</label>
-        <select id="jobRole" class="form-select">
-          <option value="">Choose...</option>
-          <option value="developer">Developer</option>
-          <option value="designer">Designer</option>
-          <option value="manager">Manager</option>
-          <option value="analyst">Analyst</option>
-        </select>
-      </div>
 
       <!-- Skills -->
       <div class="mb-3">
         <label for="skills" class="form-label">Skills</label>
         <input
           type="text"
-          id="skills"
           class="form-control"
           placeholder="E.g., JavaScript, Design, Management"
+          [(ngModel)]="skills"
+          [ngModelOptions]="{ standalone: true }"
         />
       </div>
 
       <!-- Salary Range -->
       <div class="mb-3">
         <label for="salaryRange" class="form-label">Salary Range</label>
-        <select id="salaryRange" class="form-select">
-          <option value="">Choose...</option>
-          <option value="0-30000">0 - 30,000</option>
-          <option value="30000-50000">30,000 - 50,000</option>
-          <option value="50000-100000">50,000 - 100,000</option>
-          <option value="100000+">100,000+</option>
+        <select id="salaryRange" class="form-select" (change)="setrange($event)">
+          <option value="-1">None</option>
+          <option *ngFor="let item of rangeList,index as i" [value]="i" >
+            {{ item.startRange }} - {{ item.endRange }}
+          </option>
         </select>
       </div>
 
@@ -45,12 +36,16 @@
           id="location"
           class="form-control"
           placeholder="Enter location"
+          [(ngModel)]="location"
+          [ngModelOptions]="{ standalone: true }"
         />
       </div>
 
       <!-- Filter Actions -->
       <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-primary">Apply Filters</button>
+        <button type="submit" class="btn btn-primary" (click)="SendValue()">
+          Apply Filters
+        </button>
         <button type="reset" class="btn btn-outline-secondary">Reset</button>
       </div>
     </form>

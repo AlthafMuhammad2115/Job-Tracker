@@ -1,6 +1,6 @@
 <div class="main col-12 my-2">
-    <div class="tile border rounded d-flex justify-content-between p-3 align-items-center">
-        <div class="company_detials d-flex flex-column">
+    <div class="tile border rounded d-flex justify-content-between p-3 align-items-center flex-wrap">
+        <div class="company_detials d-flex flex-column col-12 col-md-auto mb-3 mb-md-0">
             <h1 class="h3">{{role}}</h1>
             <h1 class="h5">{{company}}</h1> 
         </div>
@@ -11,7 +11,7 @@
         </div>
 
         <div class="buttons">
-            <button class="btn btn-primary">Detials <i class="bi bi-info-circle"></i></button>
+            <button class="btn btn-primary" [routerLink]="['/moredetials/',id]">Detials <i class="bi bi-info-circle"></i></button>
         </div>
     </div>
 </div>

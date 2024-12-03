@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Application = require('../models/applications.model');
 const User = require('../models/user.model');
 
-exports.add_applicant = async (req, res) => {
+add_applicant = async (req, res,next) => {
     try {
         const { companyId, jobId } = req.params;
         const { user_id } = req.body;
@@ -45,11 +45,13 @@ exports.add_applicant = async (req, res) => {
             applicant: newApplicant
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error adding applicant', error: error.message });
+        error.statusCode = 500;
+        error.message = 'Error adding applicant'
+        next(error);
     }
 }
 
-exports.list_applicants = async (req, res) => {
+list_applicants = async (req, res,next) => {
     try {
         const { companyId, jobId } = req.params;
 
@@ -101,11 +103,13 @@ exports.list_applicants = async (req, res) => {
             applicants: application,
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error retrieving applicants', error: error.message });
+        error.statusCode = 500;
+        error.message = 'Error retrieving applicants'
+        next(error);
     }
 }
 
-exports.update_status = async (req, res) => {
+update_status = async (req, res,next) => {
     try {
         const { companyId, jobId } = req.params;
         const { user_id, status } = req.body;
@@ -149,15 +153,16 @@ exports.update_status = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error updating applicant status', error: error.message });
+        error.statusCode = 500;
+        error.message = 'Error updating applicant status'
+        next(error);
     }
 }
 
-exports.filter_applicants = async (req, res) => {
+filter_applicants = async (req, res,next) => {
     try {
         const { companyId, jobId } = req.params;
         const { status } = req.body;
-
         const validStatuses = ['Applied', 'Interviewing', 'Offered', 'Rejected'];
         if (!validStatuses.includes(status)) {
             return res.status(400).json({ message: 'Invalid status value' });
@@ -188,6 +193,10 @@ exports.filter_applicants = async (req, res) => {
             applicants: result,
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error filtering applicants', error: error.message });
+        error.statusCode = 500;
+        error.message = 'Error filtering applicants'
+        next(error);
     }
 }
+
+module.exports={filter_applicants,add_applicant,list_applicants,update_status}

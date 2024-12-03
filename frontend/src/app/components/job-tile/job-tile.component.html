@@ -4,28 +4,24 @@
   >
     <div class="position-absolute icon">
       <!-- <button class="btn btn-outline-dark rounded-0">N</button> -->
-      <img
-        src="https://imgs.search.brave.com/1PiSgXJf6p3fPYyv0Xr6VcujYpFZbh1-v6zEqGx_9M0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jbG91/ZGZyb250LXVzLWVh/c3QtMi5pbWFnZXMu/YXJjcHVibGlzaGlu/Zy5jb20vcmV1dGVy/cy80NjZCSkpRN1BW/R1k1TzUzTlozS0w2/NU1ITS5wbmc"
-        alt=""
-        width="100"
-      />
+      <img src="../../../assets/cmpnylogo.webp" alt="" width="100" />
     </div>
     <div class="job_title">
-      <p class="h4">{{role}}</p>
+      <p class="h4">{{ role }}</p>
     </div>
     <div class="company_name">
-      <p class="h5">{{company}}</p>
+      <p class="h5">{{ company }}</p>
     </div>
     <div class="labels col-8 pt-2">
-      <ul class="d-flex justify-content-between">
+      <ul class="d-flex justify-content-between flex-wrap">
         <li>
-          <span><i class="bi bi-geo-alt"></i></span><span>{{location}}</span>
+          <span><i class="bi bi-geo-alt"></i></span><span>{{ location }}</span>
         </li>
         <li>
-          <span><i class="bi bi-cash-coin"></i></span><span>{{salary}}</span>
+          <span><i class="bi bi-cash-coin"></i></span><span>{{ salary }}</span>
         </li>
         <li>
-          <span><i class="bi bi-person"></i></span><span>{{post}}</span>
+          <span><i class="bi bi-person"></i></span><span>{{ post }}</span>
         </li>
       </ul>
     </div>
@@ -33,7 +29,16 @@
       <button class="btn btn-primary" [routerLink]="route1">
         DETIALS <i class="bi bi-info-circle"></i>
       </button>
-      <button class="ms-3 btn btn-primary" [routerLink]="route2" (click)="applynow()">{{btnName}}</button>
+      <button
+        class="ms-3 btn btn-primary"
+        [routerLink]="route2"
+        (click)="applynow()"
+        [ngClass]="{'disabled':isApplied}"
+      >
+      <div *ngIf="!isApplied">{{ btnName }}</div>
+      <div *ngIf="isApplied">Applied</div>
+        
+      </button>
     </div>
   </div>
 </div>

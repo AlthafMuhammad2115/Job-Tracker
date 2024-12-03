@@ -1,6 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CREATE_JOB, DELETE_JOB, LIST_JOB } from '../URLS/url';
+import { CREATE_JOB, DELETE_JOB, FILTER_JOB, LIST_JOB } from '../URLS/url';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +19,9 @@ export class JobService {
 
   delete_job(job_id:any){
     return this.http.delete(`${DELETE_JOB}/${job_id}`);
+  }
+
+  filter_job(searchdata:any){
+    return this.http.post(FILTER_JOB,searchdata);
   }
 }

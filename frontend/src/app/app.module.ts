@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -12,7 +13,6 @@ import { JobTileComponent } from './components/job-tile/job-tile.component';
 import { FilterBoxComponent } from './components/filter-box/filter-box.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { LoginComponent } from './pages/login/login.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { MoreDetialsComponent } from './pages/more-detials/more-detials.component';
@@ -23,6 +23,13 @@ import { AdminJobDetialsComponent } from './pages/admin-job-detials/admin-job-de
 import { ViewApplicantsComponent } from './pages/view-applicants/view-applicants.component';
 import { PostJobComponent } from './pages/post-job/post-job.component';
 import { HttpClientModule } from '@angular/common/http';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { authInterceptor } from './interceptors/auth.interceptor';
+
+import { ToastrModule } from 'ngx-toastr';
+import { LoadingComponent } from './pages/loading/loading.component';
+import { loadingInterceptor } from './interceptors/loading.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,9 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
     FooterComponent,
     JobTileComponent,
     FilterBoxComponent,
-    LoginFormComponent,
+    LoginFormComponent, 
     LoginComponent,
-    SignUpComponent,
     AdminLoginComponent,
     MoreDetialsComponent,
     StatusTileComponent,
@@ -41,18 +47,28 @@ import { HttpClientModule } from '@angular/common/http';
     AdminDashboardComponent,
     AdminJobDetialsComponent,
     ViewApplicantsComponent,
-    PostJobComponent
+    PostJobComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      maxOpened:1
+    })
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: loadingInterceptor, multi: true }
+
   ],
   bootstrap: [AppComponent]
 })

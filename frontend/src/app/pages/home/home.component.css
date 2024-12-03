@@ -3,3 +3,6 @@ app-filter-box{
     top: 0;
     height: 100%;
 }
+.small_filter_box{
+    top: 70%;
+}

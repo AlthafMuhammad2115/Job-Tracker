@@ -1,4 +1,4 @@
-<div class="main col-6 mx-auto my-3 d-flex flex-column">
+<div class="main col-md-6 col-11 mx-auto my-3 d-flex flex-column">
   <h1 class="h3 py-2"><span>My </span><span class="text-primary">Applications</span></h1>
   <div class="d-flex flex-column">
     <div *ngFor="let item of applicationarray">
@@ -6,6 +6,7 @@
       [role]="item.job_title"
       [company]="item.company_name"
       [status]="item.status"
+      [id]="item.job_id._id"
     ></app-status-tile> 
     </div>
     

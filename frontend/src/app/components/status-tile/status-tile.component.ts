@@ -9,4 +9,5 @@ export class StatusTileComponent {
   @Input() role!:string;
   @Input() company!:string;
   @Input() status!:string;
+  @Input() id!:any;
 }

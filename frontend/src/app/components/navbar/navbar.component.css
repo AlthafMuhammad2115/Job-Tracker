@@ -1,4 +1,4 @@
-.labels li {
+.labels li,.sidebar_optn {
     list-style-type: none;
     cursor: pointer;
     padding: 0px 10px;
@@ -6,7 +6,7 @@
 
 }
 
-.labels li:hover {
+.labels li:hover,.sidebar_optn:hover {
     border-bottom: 3px blue solid;
     padding: 0px 10px;
 }
@@ -43,4 +43,30 @@
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.sidebar{
+    z-index: 1000;
+    height: 100vh;
+}
+.sub_sidebar{
+    top: 80%;
+
+}
+.side{
+    width: fit-content;
+    top: 40%;
+}
+
+.open_class{
+    left: 0;
+    transition: .3s ease all;
+}
+.close_class{
+    left: -300px;
+    transition: .3s ease all;
+
+}
+.ham i{
+    font-size: 30px;
 }

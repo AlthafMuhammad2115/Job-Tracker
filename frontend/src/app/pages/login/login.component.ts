@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private userserv: UserService,
-    private route: Router
+    private route: Router,
+    private toast:ToastrService
   ) {}
   // Toggle between Login and Sign-up
   switchMode(mode: boolean) {
@@ -45,13 +47,18 @@ export class LoginComponent {
       .userlogin(this.loginForm.value)
       .subscribe((res: any) => {
         if (res.status === 200) {
-          console.log(res);
-
           this.route.navigateByUrl('/home');
           this.userserv.setUserToLocalStorage('user', res);
-          this.userserv.getUserFromLocalStorage('user');
+          this.userserv.IsLoggedIn()
+          this.toast.success(res.username,'Welcome',{
+            timeOut:1000,
+          })
+
         } else if (res.status === 302) {
           this.loginMessage = res.result;
+          this.toast.error('Error',this.loginMessage,{
+            timeOut:1000,
+          })
         } else {
           this.loginMessage = res.result;
         }
@@ -87,14 +94,19 @@ export class LoginComponent {
         password: this.fsignup.password.value,
       })
       .subscribe((res: any) => {
-        console.log(res);
 
         if (res.status === 200) {
           this.route.navigateByUrl('/home');
           this.userserv.setUserToLocalStorage('user', res);
-          this.userserv.getUserFromLocalStorage('user');
+          this.userserv.IsLoggedIn();
+          this.toast.success(res.username,'Welcome',{
+            timeOut:1000,
+          })
         } else {
           this.signupMessage = res.result;
+          this.toast.error('Error',this.signupMessage ,{
+            timeOut:1000,
+          })
         }
       });
   }

@@ -1,45 +1,135 @@
-<div class="main col-12 d-flex py-3 border">
-  <div class="logo col-2 d-flex justify-content-center">
+<div
+  class="main col-12 container-fluid d-flex py-3 border sticky-top static-md-0"
+>
+  <div
+    class="logo col-md-2 col-4 d-flex justify-content-center align-items-center"
+  >
     <h1><span class="text-primary">Job</span><span>Seeker</span></h1>
   </div>
-  <div class="labels col-5 pt-3 d-flex justify-content-center">
-    <div class="col-8">
+
+  <div
+    class="labels col-md-5 col-5 pt-3 justify-content-center d-none d-md-flex"
+  >
+    <div class="col-md-8">
       <ul class="col-12 d-flex align-items-baseline justify-content-start">
-        <li *ngIf="!IsAdminlogged" routerLink="home" [routerLinkActive]="'active_class'" class="me-5">Dashboard</li>
-        <li *ngIf="Islogged" routerLink="application" routerLinkActive="active_class">
-          Applications
+        <li
+          *ngIf="!IsAdminlogged"
+          routerLink="home"
+          [routerLinkActive]="'active_class'"
+          class="me-5"
+        >
+          Dashboard
+        </li>
+        <li
+          *ngIf="Islogged"
+          routerLink="application"
+          routerLinkActive="active_class"
+        >
+          My Applications
         </li>
       </ul>
     </div>
   </div>
+
+  <!-- with out login -->
   <div
+    class="profile col-5 d-md-flex justify-content-end align-items-center pe-5 d-none"
     *ngIf="!Islogged && !IsAdminlogged"
-    class="profile col-5 d-flex justify-content-end align-items-center pe-5"
   >
-    <button routerLink="login" class="btn btn-primary h-75 me-3">
+    <button routerLink="login" class="btn btn-primary me-3">
       Candidate Sign-up
     </button>
-    <button routerLink="adminlogin" class="btn btn-primary h-75 me-3">
+    <button routerLink="adminlogin" class="btn btn-primary me-3">
       Employee Sign-up
     </button>
   </div>
-  
 
-  <div *ngIf="Islogged || !IsAdminlogged" class="dropdown d-flex justify-content-end me-3 col-5">
+  <!-- when login -->
+  <div
+    class="ham d-md-none col-8 d-flex align-items-center justify-content-end"
+    *ngIf="!IsAdminlogged"
+  >
+    <i class="bi bi-x-lg h6" *ngIf="open" (click)="close()" role="button"></i>
+    <i class="bi bi-list h6" *ngIf="!open" (click)="openSidebar()" role="button"></i>
+  </div>
+
+  <div
+    *ngIf="Islogged && !IsAdminlogged"
+    class="dropdown justify-content-end me-3 col-5 d-none d-md-flex"
+  >
     <img
-      src="https://imgs.search.brave.com/woIFKacyuP0vF2CmvlPkBOnWukh2Gx9JDpAgXZ-HuDg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAwLzY3LzczLzE0/LzM2MF9GXzY3NzMx/NDczX0dBc2RSVUNC/aDdYRWhNM1gwdHB6/YklZRGdIaXJKQWdQ/LmpwZw"
+      src="../../../assets/profile.webp"
       alt="User Profile"
       [width]="60"
       height="60"
       class="rounded-circle border border-primary btn p-0 me-3 image"
-      
     />
-    <div class="dropdown-content ">
+    <div class="dropdown-content">
       <a class="btn btn-danger" (click)="logout()">Logout</a>
     </div>
   </div>
 
-  <div class="admin_profile col-5 d-flex justify-content-end align-items-center pe-3">
+  <!-- when admin loged in  -->
+  <div
+    *ngIf="IsAdminlogged"
+    class="admin_profile col-md-5 col-8 d-flex justify-content-end align-items-center pe-3"
+  >
     <button class="btn btn-primary" (click)="adminlogout()">Logout</button>
+  </div>
+</div>
+
+<!-- side bar starts -->
+<div
+  class="sidebar position-fixed bg-white top-0 col-6 border d-md-none postion-relative"
+  [ngClass]="open ? 'open_class' : 'close_class'"
+>
+  <div
+    class="side position-absolute start-50 translate-middle d-flex flex-column"
+  >
+    <div
+      routerLink="home"
+      [routerLinkActive]="'active_class'"
+      class="sidebar_optn h4"
+      role="button"
+      (click)="close()"
+
+    >
+      Dashboard
+    </div>
+
+    <div
+      routerLink="application"
+      routerLinkActive="active_class"
+      class="sidebar_optn h4 mt-3"
+      role="button"
+      *ngIf="Islogged"
+      (click)="close()"
+    >
+      Applications
+    </div>
+  </div>
+
+  <div
+    class="sub_sidebar d-flex flex-column align-items-center position-absolute ms-5 pb-5 translate-middle-y"
+  >
+    <button
+      class="btn btn-primary mb-3"
+      routerLink="login"
+      (click)="close()"
+      *ngIf="!IsAdminlogged && !Islogged"
+    >
+      Candidate Sign-up
+    </button>
+    <button
+      class="btn btn-primary"
+      routerLink="adminlogin"
+      (click)="close()"
+      *ngIf="!IsAdminlogged && !Islogged"
+    >
+      Employee Sign-up
+    </button>
+    <button class="btn btn-primary" (click)="logout()" *ngIf="Islogged">
+      logout
+    </button>
   </div>
 </div>

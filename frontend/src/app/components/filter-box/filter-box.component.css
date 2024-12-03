@@ -6,3 +6,6 @@
 .filter-title {
   font-weight: bold;
 }
+.filter-box{
+  z-index: 10000000;
+}

@@ -3,7 +3,7 @@ const Application = require('../models/applications.model');
 const Company = require('../models/companies.model');
 const mongoose = require('mongoose');
 
-exports.create_job_application = async (req, res) => {
+create_job_application = async (req, res,next) => {
     const session = await mongoose.startSession();
     session.startTransaction();
 
@@ -31,12 +31,13 @@ exports.create_job_application = async (req, res) => {
     } catch (error) {
         await session.abortTransaction();
         session.endSession();
-
-        res.status(400).json({ message: error.message });
+        error.statusCode = 400;
+        error.message = error.message
+        next(error);
     }
 }
 
-exports.list_job_application = async (req, res) => {
+list_job_application = async (req, res,next) => {
     try {
         const applications = await JobApplication.aggregate([
             {
@@ -71,11 +72,13 @@ exports.list_job_application = async (req, res) => {
         ]);
         res.status(200).json(applications);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        error.statusCode = 500;
+        error.message = error.message
+        next(error);
     }
 }
 
-exports.edit_job_application = async (req, res) => {
+edit_job_application = async (req, res,next) => {
     try {
         const updatedApplication = await JobApplication.findByIdAndUpdate(
             req.params.id,
@@ -87,11 +90,13 @@ exports.edit_job_application = async (req, res) => {
         }
         res.status(200).json(updatedApplication);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        error.statusCode = 400;
+        error.message = error.message
+        next(error);
     }
 }
 
-exports.delete_job_application = async (req, res) => {
+delete_job_application = async (req, res,next) => {
     try {
         const deletedApplication = await JobApplication.findByIdAndDelete(req.params.id);
         if (!deletedApplication) {
@@ -99,6 +104,60 @@ exports.delete_job_application = async (req, res) => {
         }
         res.status(200).json({ message: 'Job application deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        error.statusCode = 500;
+        error.message = error.message
+        next(error);
     }
 }
+
+
+filterJobs = async (req, res,next) => {
+    try {
+        throw new Error();
+      const { location, skill, salary } = req.body;
+  
+      const query = {};
+  
+      if (location) {
+        query.location = { $regex: location, $options: 'i' };
+      }
+  
+      if (skill) {
+        query.skill = { $in: [skill] };
+      }
+  
+      if (salary && salary.startRange !== undefined && salary.endRange !== undefined) {
+        query.salary = { $gte: salary.startRange, $lte: salary.endRange };
+      }
+  
+
+      const jobs = await JobApplication.find(query)
+        .populate({
+          path: 'company_id',
+          select: 'company_name',
+        });
+  
+      const jobsWithCompanyName = jobs.map((job) => ({
+        job_id: job._id,
+        job_title: job.job_title,
+        location: job.location,
+        salary: job.salary,
+        skill: job.skill,
+        post_no: job.post_no,
+        company_name: job.company_id?.company_name || 'Unknown',
+      }));
+  
+      return res.status(200).json({
+        success: true,
+        count: jobsWithCompanyName.length,
+        data: jobsWithCompanyName,
+      });
+    } catch (error) {
+        error.statusCode = 500;
+        error.message = 'Server error'
+        next(error);
+    }
+  };
+  
+  module.exports={filterJobs,delete_job_application,edit_job_application,list_job_application,create_job_application}
+

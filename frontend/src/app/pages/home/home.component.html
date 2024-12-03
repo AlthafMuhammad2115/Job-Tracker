@@ -1,7 +1,19 @@
-<div class="container main d-flex py-3">
-  <app-filter-box class="col-4 postion-sticky top-0"></app-filter-box>
-  <div class="d-flex flex-column col-8">
+
+<div class="container main d-md-flex py-3 position-relative">
+  <app-filter-box
+    (valueSent)="recieveValues($event)"
+    class="col-md-4 postion-sticky top-0 d-none d-md-block" 
+  ></app-filter-box>
+
+  <div class="col-12 d-md-none ms-3 mb-4">
+    <button class="btn btn-outline-primary" (click)="filteropen()">
+      <i class="bi bi-funnel-fill"></i>
+    </button>
+  </div>
+
+  <div class="d-flex flex-column col-md-8 col-12">
     <div *ngFor="let item of jobarray">
+      
       <app-job-tile
         [role]="item.job_title"
         [company]="item.company_name"
@@ -9,11 +21,25 @@
         [salary]="item.salary"
         [post]="item.post_no"
         btnName="APPLY NOW"
-        [route1]="['/moredetials/',item._id]"
+        [route1]="['/moredetials/', item._id]"
         [job_id]="item._id"
         [company_id]="item.company_id"
+        [isApplied]="item.isApplied"
       ></app-job-tile>
     </div>
-  </div> 
+  </div>
 </div>
- 
+
+<app-filter-box
+  class="col-8 small_filter_box position-fixed start-50 translate-middle d-md-none position-relative"
+  *ngIf="Isfilteropen"
+  (valueSent)="recieveValues($event)"
+  >
+  <button
+    close
+    class="btn btn-outline-primary position-abosulte top-0 ms-1 translate-middle"
+    (click)="filterclose()"
+    >
+    <i class="bi bi-x-lg"></i>
+  </button>
+</app-filter-box>

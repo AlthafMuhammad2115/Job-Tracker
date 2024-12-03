@@ -6,7 +6,7 @@
 </div>
 
 
-<div class="main d-flex flex-column p-4 col-6 mx-auto border mb-3 rounded">
+<div class="main d-flex flex-column p-4 col-md-6 col-11 mx-auto border mb-3 rounded">
 
   <div class="role">
     <h1>{{menudata[0].job_title}}</h1>
@@ -16,12 +16,12 @@
   </div>
 
   <div class="labels col-12 pt-3">
-    <ul class="d-flex justify-content-between">
+    <ul class="d-flex justify-content-between flex-wrap ps-0 ps-md-2">
       <li class="d-flex flex-column">
         <div>
           <span><i class="bi bi-geo-alt"></i></span><span>salary</span>
         </div>
-        <div>{{menudata[0].salary| currency:'INR'}}</div>
+        <div>{{menudata[0].salary| currency:'INR':'symbol':'1.0-0'}}</div>
       </li>
       <li class="d-flex flex-column">
         <div>

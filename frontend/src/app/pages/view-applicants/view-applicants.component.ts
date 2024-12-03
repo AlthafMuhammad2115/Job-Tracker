@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationService } from '../../services/application.service';
 import { AdminService } from '../../services/admin.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-applicants',
@@ -13,26 +14,30 @@ export class ViewApplicantsComponent {
   public boolArray: boolean[] = [false, false, false, false];
   public curStr: string = 'Applied';
   public status: string[] = ['Applied', 'Interviewing', 'Offered', 'Rejected'];
-  applicantarray: any;
+  applicantarray: any=[];
   applied_date: any = [];
   job_id: string | null;
+  index!:number;
+
+  len=this.applicantarray.length
   constructor(
     private ar: ActivatedRoute,
     private applserv: ApplicationService,
-    private adminserv: AdminService
+    private adminserv: AdminService,
+    private toast:ToastrService
   ) {
+
     this.job_id = ar.snapshot.paramMap.get('job_id');
 
     if (this.job_id) {
       applserv
         .list_applicants(
-          adminserv.getUserFromLocalStorage('admin').userid,
+          adminserv.getAdminFromLocalStorage('admin').userid,
           this.job_id
         )
         .subscribe((res: any) => {
           this.applicantarray = res.applicants;
-          console.log(this.applicantarray);
-
+          this.len=this.applicantarray.length
           for (let i = 0; i < this.applicantarray.length; i++) {
             this.applied_date[i] = this.formatDateToDDMMYYYY(
               this.applicantarray[i].applied_date
@@ -42,7 +47,8 @@ export class ViewApplicantsComponent {
     }
   }
 
-  toggleStatusOn() {
+  toggleStatusOn(index:number) {
+    this.index=index
     this.statusToggle = true;
   }
   toggleStatusOff() {
@@ -50,23 +56,26 @@ export class ViewApplicantsComponent {
   }
 
   updatestatus() {
-    // let form = {
-    //   user_id: my_user_id,
-    //   status: this.curStr,
-    // };
+    
+    let form = {
+      user_id: this.applicantarray[this.index].userid,
+      status: this.curStr,
+    };
 
-    // console.log(this.curStr);
+    console.log(form);
     
     this.toggleStatusOff();
-    // this.applserv
-    //   .update_status(
-    //     this.adminserv.getUserFromLocalStorage('admin').userid,
-    //     this.job_id,
-    //     form
-    //   )
-    //   .subscribe((res) => {
-    //     console.log(res);
-    //   });
+    this.applserv
+      .update_status(
+        this.adminserv.getAdminFromLocalStorage('admin').userid,
+        this.job_id,
+        form
+      )
+      .subscribe((res) => {
+        console.log("respnse",res);
+        this.toast.success('Updated','Status',{timeOut:1000})
+
+      });
 
   }
   change(index: number) {

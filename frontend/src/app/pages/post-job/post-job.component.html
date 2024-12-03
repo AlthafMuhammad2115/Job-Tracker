@@ -1,5 +1,5 @@
 <div
-  class="col-6 mx-auto main d-flex flex-column align-items-center my-3 border rounded"
+  class="col-md-6 col-11 mx-auto main d-flex flex-column align-items-center my-3 border rounded"
 >
   <div class="heading py-3">
     <h1>Post a <span class="text-primary">Job.</span>.</h1>
@@ -58,10 +58,18 @@
             }"
             multiple
           />
-          <button class="btn btn-primary" (click)="onadd(newSkill.value)">
-            Add
-          </button>
+          <button class="btn btn-primary" (click)="onadd(newSkill)">Add</button>
         </div>
+      </div>
+
+      <div class="list_skills col-8 d-flex flex-wrap">
+        <button
+          class="h6 px-2 rounded-pill border me-1 list_ind d-flex align-items-center"
+          *ngFor="let item of skillsUserArray,index as i"
+          (click)="deleteSkills(i)"
+        >
+          {{ item }} <i class="bi bi-x"></i>
+        </button>
       </div>
 
       <div class="form_cn">
@@ -77,14 +85,16 @@
       </div>
       <div class="form_cn">
         <label for="">Last date</label>
-        <input
-          type="date"
-          class="form-control w-25"
-          formControlName="last_date"
-          [ngClass]="{
-            'is-invalid': issubmit && f.last_date.errors
-          }"
-        />
+        <div class="input col-6 col-md-4">
+          <input
+            type="date"
+            class="form-control"
+            formControlName="last_date"
+            [ngClass]="{
+              'is-invalid': issubmit && f.last_date.errors
+            }"
+          />
+        </div>
       </div>
       <div class="form_cn">
         <label for="">Notes(eg : requirement,responsibilities)</label>

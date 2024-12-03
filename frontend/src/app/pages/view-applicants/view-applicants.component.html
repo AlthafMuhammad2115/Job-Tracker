@@ -1,4 +1,6 @@
-<div class="main col-6 mx-auto my-3 d-flex flex-column position-relative">
+<div
+  class="main col-md-6 col-11 mx-auto my-3 d-flex flex-column position-relative"
+>
   <div class="head">
     <h1 class="text-primary">Applicants</h1>
   </div>
@@ -7,12 +9,18 @@
     <h1>Software Engineer</h1>
   </div>
 
-  <div class="d-flex flex-column all_applicant">
-    <div *ngFor="let item of applicantarray; let i = index">
+  <div class="is_empty position-relative" *ngIf="len == 0">
+    <h1 class="text-center position-absolute top-50 start-50 translate-middle">
+      No Applicants <span class="text-primary">Yet...</span>
+    </h1>
+  </div>
+  <div class="d-flex flex-column all_applicant" *ngIf="len != 0">
+    <div *ngFor="let item of applicantarray; let i = index" index="i">
       <div
-        class="applicant d-flex justify-content-between align-items-center border rounded p-3 my-3"
+        index="i"
+        class="applicant d-flex justify-content-between align-items-center border rounded p-3 my-3 flex-wrap"
       >
-        <div class="info d-flex flex-column">
+        <div class="info d-flex flex-column col-12 col-md-auto mb-3 mb-md-0">
           <h1 class="h3">{{ item.username }}</h1>
           <h1 class="h6"><i class="bi bi-envelope"></i>{{ item.email }}</h1>
         </div>
@@ -28,7 +36,7 @@
           <h1 class="h6">{{ item.status }}</h1>
         </div>
         <div class="button">
-          <button class="btn btn-primary" (click)="toggleStatusOn()">
+          <button class="btn btn-primary" (click)="toggleStatusOn(i)">
             Change Status
           </button>
         </div>
@@ -38,14 +46,16 @@
 </div>
 <div
   *ngIf="statusToggle"
-  class="status-selector position-absolute top-50 start-50 translate-middle border rounded-0 bg-white p-4 col-md-4 col-10 shadow-sm"
+  class="status-selector position-fixed top-50 start-50 translate-middle border rounded-0 bg-white p-4 col-md-4 col-10 shadow-sm"
 >
   <div class="close_btn d-flex justify-content-end pb-3">
     <button class="btn btn-outline-primary" (click)="toggleStatusOff()">
       <i class="bi bi-x-lg"></i>
     </button>
   </div>
-  <div class="d-flex status_message">
+  <div
+    class="d-flex status_message flex-wrap justify-content-evenly my-2 my-md-0"
+  >
     <div *ngFor="let item of status; let i = index" class="text-center">
       <h1
         class="h6 text-primary px-3 rounded"

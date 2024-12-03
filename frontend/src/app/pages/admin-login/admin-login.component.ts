@@ -6,27 +6,31 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-login',
   templateUrl: './admin-login.component.html',
-  styleUrl: './admin-login.component.css'
+  styleUrl: './admin-login.component.css',
 })
 export class AdminLoginComponent {
-  submit: boolean=false;
-  submitsignup: boolean=false;
+  submit: boolean = false;
+  submitsignup: boolean = false;
   isSignUpMode = false;
-  loginMessage:string=""
-  signupMessage: string="";
+  loginMessage: string = '';
+  signupMessage: string = '';
   userserv: any;
 
-    constructor(private fb:FormBuilder,private adminserv:AdminService,private route:Router){}
+  constructor(
+    private fb: FormBuilder,
+    private adminserv: AdminService,
+    private route: Router
+  ) {}
 
   switchMode(mode: boolean) {
     this.isSignUpMode = mode;
   }
 
   //admin login
-  loginForm=this.fb.group({
+  loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
-  })
+  });
 
   get f() {
     return this.loginForm.controls;
@@ -38,20 +42,19 @@ export class AdminLoginComponent {
     this.submit = true;
     if (this.loginForm.invalid) return;
 
-    this.adminserv.adminlogin(this.loginForm.value).subscribe((res:any)=>{
+    this.adminserv.adminlogin(this.loginForm.value).subscribe((res: any) => {
       if (res.status === 200) {
         console.log(res);
 
-        this.route.navigateByUrl('/adminDashboard/'+res.userid);
-        this.adminserv.setUserToLocalStorage('admin', res);
-        this.adminserv.getUserFromLocalStorage('admin');
+        this.route.navigateByUrl('/adminDashboard/' + res.userid);
+        this.adminserv.setAdminToLocalStorage('admin', res);
+        this.adminserv.IsAdminLoggedIn();
       } else if (res.status === 302) {
         this.loginMessage = res.result;
       } else {
         this.loginMessage = res.result;
       }
-    })
-
+    });
   }
 
   //admin signup
@@ -75,8 +78,22 @@ export class AdminLoginComponent {
       return;
     }
 
+    this.adminserv
+      .adminsignup({
+        company_name: this.fsignup.company.value,
+        email: this.fsignup.email.value,
+        password: this.fsignup.password.value,
+      })
+      .subscribe((res: any) => {
+        console.log(res);
 
-    
+        if (res.status == 200) {
+          this.route.navigateByUrl('/adminDashboard/' + res.userid);
+          this.adminserv.setAdminToLocalStorage('admin', res);
+          this.adminserv.IsAdminLoggedIn();
+        } else {
+          this.signupMessage = res.message;
+        }
+      });
   }
-
 }
