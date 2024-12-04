@@ -2,8 +2,11 @@ const JobApplication = require('../models/job.model');
 const Application = require('../models/applications.model');
 const Company = require('../models/companies.model');
 const mongoose = require('mongoose');
+const lodash = require('lodash')
+const { ALLOWED_APPLICATION_UPDATES_FIELD } = require('../config/whitelist.config')
 
-create_job_application = async (req, res,next) => {
+
+create_job_application = async (req, res, next) => {
     const session = await mongoose.startSession();
     session.startTransaction();
 
@@ -37,7 +40,7 @@ create_job_application = async (req, res,next) => {
     }
 }
 
-list_job_application = async (req, res,next) => {
+list_job_application = async (req, res, next) => {
     try {
         const applications = await JobApplication.aggregate([
             {
@@ -78,11 +81,15 @@ list_job_application = async (req, res,next) => {
     }
 }
 
-edit_job_application = async (req, res,next) => {
+edit_job_application = async (req, res, next) => {
     try {
+        const allowedFields = ALLOWED_APPLICATION_UPDATES_FIELD;
+
+        const updates = lodash.pick(req.body, allowedFields);
+
         const updatedApplication = await JobApplication.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            updates,
             { new: true, runValidators: true }
         );
         if (!updatedApplication) {
@@ -96,7 +103,7 @@ edit_job_application = async (req, res,next) => {
     }
 }
 
-delete_job_application = async (req, res,next) => {
+delete_job_application = async (req, res, next) => {
     try {
         const deletedApplication = await JobApplication.findByIdAndDelete(req.params.id);
         if (!deletedApplication) {
@@ -111,52 +118,52 @@ delete_job_application = async (req, res,next) => {
 }
 
 
-filterJobs = async (req, res,next) => {
+filterJobs = async (req, res, next) => {
     try {
-      const { location, skill, salary } = req.body;
-  
-      const query = {};
-  
-      if (location) {
-        query.location = { $regex: location, $options: 'i' };
-      }
-  
-      if (skill) {
-        query.skill = { $in: [skill] };
-      }
-  
-      if (salary && salary.startRange !== undefined && salary.endRange !== undefined) {
-        query.salary = { $gte: salary.startRange, $lte: salary.endRange };
-      }
-  
+        const { location, skill, salary } = req.body;
 
-      const jobs = await JobApplication.find(query)
-        .populate({
-          path: 'company_id',
-          select: 'company_name',
+        const query = {};
+
+        if (location) {
+            query.location = { $regex: location, $options: 'i' };
+        }
+
+        if (skill) {
+            query.skill = { $in: [skill] };
+        }
+
+        if (salary && salary.startRange !== undefined && salary.endRange !== undefined) {
+            query.salary = { $gte: salary.startRange, $lte: salary.endRange };
+        }
+
+
+        const jobs = await JobApplication.find(query)
+            .populate({
+                path: 'company_id',
+                select: 'company_name',
+            });
+
+        const jobsWithCompanyName = jobs.map((job) => ({
+            job_id: job._id,
+            job_title: job.job_title,
+            location: job.location,
+            salary: job.salary,
+            skill: job.skill,
+            post_no: job.post_no,
+            company_name: job.company_id?.company_name || 'Unknown',
+        }));
+
+        return res.status(200).json({
+            success: true,
+            count: jobsWithCompanyName.length,
+            data: jobsWithCompanyName,
         });
-  
-      const jobsWithCompanyName = jobs.map((job) => ({
-        job_id: job._id,
-        job_title: job.job_title,
-        location: job.location,
-        salary: job.salary,
-        skill: job.skill,
-        post_no: job.post_no,
-        company_name: job.company_id?.company_name || 'Unknown',
-      }));
-  
-      return res.status(200).json({
-        success: true,
-        count: jobsWithCompanyName.length,
-        data: jobsWithCompanyName,
-      });
     } catch (error) {
         error.statusCode = 500;
         error.message = 'Server error'
         next(error);
     }
-  };
-  
-  module.exports={filterJobs,delete_job_application,edit_job_application,list_job_application,create_job_application}
+};
+
+module.exports = { filterJobs, delete_job_application, edit_job_application, list_job_application, create_job_application }
 

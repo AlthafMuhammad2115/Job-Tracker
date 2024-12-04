@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-login',
@@ -19,7 +20,8 @@ export class AdminLoginComponent {
   constructor(
     private fb: FormBuilder,
     private adminserv: AdminService,
-    private route: Router
+    private route: Router,
+    private toast:ToastrService
   ) {}
 
   switchMode(mode: boolean) {
@@ -42,19 +44,20 @@ export class AdminLoginComponent {
     this.submit = true;
     if (this.loginForm.invalid) return;
 
-    this.adminserv.adminlogin(this.loginForm.value).subscribe((res: any) => {
-      if (res.status === 200) {
-        console.log(res);
+    this.adminserv.adminlogin(this.loginForm.value).subscribe(
+      (res: any) => {
+        if (res.token) {
+          console.log(res);
 
-        this.route.navigateByUrl('/adminDashboard/' + res.userid);
-        this.adminserv.setAdminToLocalStorage('admin', res);
-        this.adminserv.IsAdminLoggedIn();
-      } else if (res.status === 302) {
-        this.loginMessage = res.result;
-      } else {
-        this.loginMessage = res.result;
+          this.route.navigateByUrl('/adminDashboard/' + res.userid);
+          this.adminserv.setAdminToLocalStorage('admin', res);
+          this.adminserv.IsAdminLoggedIn();
+        }
+      },
+      (err) => {
+        this.loginMessage = err.error.result;
       }
-    });
+    );
   }
 
   //admin signup
@@ -84,16 +87,21 @@ export class AdminLoginComponent {
         email: this.fsignup.email.value,
         password: this.fsignup.password.value,
       })
-      .subscribe((res: any) => {
-        console.log(res);
+      .subscribe(
+        (res: any) => {
+          console.log(res);
 
-        if (res.status == 200) {
-          this.route.navigateByUrl('/adminDashboard/' + res.userid);
-          this.adminserv.setAdminToLocalStorage('admin', res);
-          this.adminserv.IsAdminLoggedIn();
-        } else {
-          this.signupMessage = res.message;
+          if (res.token) {
+            this.route.navigateByUrl('/adminDashboard/' + res.userid);
+            this.adminserv.setAdminToLocalStorage('admin', res);
+            this.adminserv.IsAdminLoggedIn();
+          }
+        },
+        (err) => {
+          console.log(err);
+          
+          this.signupMessage = err.error.result;
         }
-      });
+      );
   }
 }

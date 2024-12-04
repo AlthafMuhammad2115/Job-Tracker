@@ -31,11 +31,7 @@ app.use(cors({
 
 app.options('*', cors());
 
- InitSentry();
-
 app.use(express.json())
-
-
 
 app.use('/api/company',companyRoutes);
 app.use('/api/job',jobRoutes);
@@ -46,10 +42,6 @@ app.use('/api/application',applicationRoutes);
 app.use(errorHandler);
 
 
-app.use((err, req, res, next) => {
-    Sentry.captureException(err);
-    next(err);
-});
 app.listen(port,()=>{
     console.log(`server started at port ${port}`);
 })

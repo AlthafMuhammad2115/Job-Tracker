@@ -53,13 +53,18 @@ export class PostJobComponent {
     if (this.postForm.invalid) return;
 
     if (path == 'postjob') {
-      this.jobserv.create_job(this.postForm.value).subscribe((res) => {
-        console.log(res);
-        this.route.navigateByUrl('/adminDashboard/' + this.company_id);
-        this.toast.success('Job Posted', '', {
-          timeOut: 1000,
-        });
-      });
+      this.jobserv.create_job(this.postForm.value).subscribe(
+        (res) => {
+          console.log(res);
+          this.route.navigateByUrl('/adminDashboard/' + this.company_id);
+          this.toast.success('Job Posted', '', {
+            timeOut: 1000,
+          });
+        },
+        (err) => {
+          this.toast.error(err.error.message);
+        }
+      );
     }
   }
 
@@ -67,11 +72,10 @@ export class PostJobComponent {
     const skill = newSkill.value.trim();
     this.skillArray.push(this.fb.control(skill, Validators.required));
     newSkill.value = '';
-    this.skillsUserArray=this.skillArray.value;
-    
+    this.skillsUserArray = this.skillArray.value;
   }
-  deleteSkills(index:number){
+  deleteSkills(index: number) {
     this.skillArray.removeAt(index);
-    this.skillsUserArray=this.skillArray.value;
+    this.skillsUserArray = this.skillArray.value;
   }
 }

@@ -50,7 +50,12 @@
     *ngIf="!IsAdminlogged"
   >
     <i class="bi bi-x-lg h6" *ngIf="open" (click)="close()" role="button"></i>
-    <i class="bi bi-list h6" *ngIf="!open" (click)="openSidebar()" role="button"></i>
+    <i
+      class="bi bi-list h6"
+      *ngIf="!open"
+      (click)="openSidebar()"
+      role="button"
+    ></i>
   </div>
 
   <div
@@ -80,9 +85,12 @@
 
 <!-- side bar starts -->
 <div
-  class="sidebar position-fixed bg-white top-0 col-6 border d-md-none postion-relative"
+  class="sidebar position-fixed bg-white top-0 col-8 border d-md-none postion-relative"
   [ngClass]="open ? 'open_class' : 'close_class'"
 >
+  <div class="logo">
+    <h1 class="text-center mt-4"><span class="text-primary ">Job</span><span>Seeker</span></h1>
+  </div>
   <div
     class="side position-absolute start-50 translate-middle d-flex flex-column"
   >
@@ -92,7 +100,6 @@
       class="sidebar_optn h4"
       role="button"
       (click)="close()"
-
     >
       Dashboard
     </div>

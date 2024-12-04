@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { JobService } from '../../services/job.service';
 import { UserService } from '../../services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -13,35 +14,47 @@ export class HomeComponent {
   location: any;
   Isfilteropen: boolean = false;
 
-  IsUserLoggedIn!:boolean;
+  IsUserLoggedIn!: boolean;
 
   public jobarray: any[] = [];
   public applicationArray: any[] = [];
   filterdata: any;
-  constructor(private jobServ: JobService,private userServ:UserService) {
+  constructor(
+    private jobServ: JobService,
+    private userServ: UserService,
+    private toast: ToastrService
+  ) {
     // listt all job``
-    jobServ.list_all_jobs().subscribe((res: any) => {
-      console.log(res);
+    jobServ.list_all_jobs().subscribe(
+      (res: any) => {
+        console.log(res);
 
-      this.jobarray = res;
-    });
+        this.jobarray = res;
+      },
+      (err) => {
+        this.toast.error(err.error.message);
+      }
+    );
 
     // list all applied jobs of applicant
-    this.IsUserLoggedIn=userServ.IsLoggedIn()
-    if(this.IsUserLoggedIn){
-      const userid=userServ.getUserFromLocalStorage('user').userid
-      userServ.viewuserapplication(userid).subscribe((res:any)=>{
-        this.applicationArray=res;
-        console.log(this.applicationArray);
-        this.jobarray=this.updateJobApplicationStatus(this.jobarray,this.applicationArray)
-        console.log("newly set",this.jobarray);
-        
-        
-      })
-
-
-    }else{
-
+    this.IsUserLoggedIn = userServ.IsLoggedIn();
+    if (this.IsUserLoggedIn) {
+      const userid = userServ.getUserFromLocalStorage('user').userid;
+      userServ.viewuserapplication(userid).subscribe(
+        (res: any) => {
+          this.applicationArray = res;
+          console.log(this.applicationArray);
+          this.jobarray = this.updateJobApplicationStatus(
+            this.jobarray,
+            this.applicationArray
+          );
+          console.log('newly set', this.jobarray);
+        },
+        (err) => {
+          this.toast.error(err.error.message);
+        }
+      );
+    } else {
     }
   }
   filteropen() {
@@ -55,20 +68,29 @@ export class HomeComponent {
     let filterdata = value;
     console.log(filterdata);
 
-    this.jobServ.filter_job(filterdata).subscribe((res:any)=>{
-      this.jobarray=this.updateJobApplicationStatus(res.data,this.applicationArray)
-    })
-    
+    this.jobServ.filter_job(filterdata).subscribe(
+      (res: any) => {
+        this.jobarray = this.updateJobApplicationStatus(
+          res.data,
+          this.applicationArray
+        );
+      },
+      (err) => {
+        this.toast.error(err.error.message);
+      }
+    );
   }
 
   // reset job array if user logged in and applied
-  updateJobApplicationStatus(jobs:any, applications:any) {
-    const appliedJobIds = new Set(applications.map((app:any) => app.job_id._id));
-  
-    return jobs.map((job:any) => {
+  updateJobApplicationStatus(jobs: any, applications: any) {
+    const appliedJobIds = new Set(
+      applications.map((app: any) => app.job_id._id)
+    );
+
+    return jobs.map((job: any) => {
       return {
         ...job,
-        isApplied: appliedJobIds.has(job.job_id)
+        isApplied: appliedJobIds.has(job.job_id),
       };
     });
   }

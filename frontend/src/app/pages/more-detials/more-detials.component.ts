@@ -3,6 +3,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { JobService } from '../../services/job.service';
 import { ApplicationService } from '../../services/application.service';
 import { UserService } from '../../services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-more-detials',
@@ -19,21 +20,27 @@ export class MoreDetialsComponent {
     private jobserv: JobService,
     private applserv: ApplicationService,
     private userserv: UserService,
-    private route: Router
+    private route: Router,
+    private toast:ToastrService
   ) {
-    jobserv.list_all_jobs().subscribe((res) => {
-      this.jobarray = res;
-      let job_id = ar.snapshot.paramMap.get('job_id');
+    jobserv.list_all_jobs().subscribe(
+      (res) => {
+        this.jobarray = res;
+        let job_id = ar.snapshot.paramMap.get('job_id');
 
-      if (job_id) {
-        this.menudata = this.jobarray.filter((value: any) => {
-          this.lastdate = this.formatDateToDDMMYYYY(value.last_date);
-          this.postdate = this.formatDateToDDMMYYYY(value.posted_date);
+        if (job_id) {
+          this.menudata = this.jobarray.filter((value: any) => {
+            this.lastdate = this.formatDateToDDMMYYYY(value.last_date);
+            this.postdate = this.formatDateToDDMMYYYY(value.posted_date);
 
-          return value._id == job_id;
-        });
+            return value._id == job_id;
+          });
+        }
+      },
+      (err) => {
+        this.toast.error(err.error.message);
       }
-    });
+    );
 
     console.log(this.menudata);
   }
@@ -66,7 +73,9 @@ export class MoreDetialsComponent {
     };
     this.applserv
       .add_applicant(userid, job_id, company_id)
-      .subscribe((res) => {});
+      .subscribe((res:any) => {
+        this.toast.success(res.message)
+      });
   }
 
   ngOnInit() {}

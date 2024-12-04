@@ -14,19 +14,18 @@ export class ViewApplicantsComponent {
   public boolArray: boolean[] = [false, false, false, false];
   public curStr: string = 'Applied';
   public status: string[] = ['Applied', 'Interviewing', 'Offered', 'Rejected'];
-  applicantarray: any=[];
+  applicantarray: any = [];
   applied_date: any = [];
   job_id: string | null;
-  index!:number;
+  index!: number;
 
-  len=this.applicantarray.length
+  len = this.applicantarray.length;
   constructor(
     private ar: ActivatedRoute,
     private applserv: ApplicationService,
     private adminserv: AdminService,
-    private toast:ToastrService
+    private toast: ToastrService
   ) {
-
     this.job_id = ar.snapshot.paramMap.get('job_id');
 
     if (this.job_id) {
@@ -37,18 +36,21 @@ export class ViewApplicantsComponent {
         )
         .subscribe((res: any) => {
           this.applicantarray = res.applicants;
-          this.len=this.applicantarray.length
+          this.len = this.applicantarray.length;
           for (let i = 0; i < this.applicantarray.length; i++) {
             this.applied_date[i] = this.formatDateToDDMMYYYY(
               this.applicantarray[i].applied_date
             );
           }
-        });
+        },
+      (err)=>{
+        toast.error(err.error.message)
+      });
     }
   }
 
-  toggleStatusOn(index:number) {
-    this.index=index
+  toggleStatusOn(index: number) {
+    this.index = index;
     this.statusToggle = true;
   }
   toggleStatusOff() {
@@ -56,14 +58,13 @@ export class ViewApplicantsComponent {
   }
 
   updatestatus() {
-    
     let form = {
       user_id: this.applicantarray[this.index].userid,
       status: this.curStr,
     };
 
     console.log(form);
-    
+
     this.toggleStatusOff();
     this.applserv
       .update_status(
@@ -71,12 +72,15 @@ export class ViewApplicantsComponent {
         this.job_id,
         form
       )
-      .subscribe((res) => {
-        console.log("respnse",res);
-        this.toast.success('Updated','Status',{timeOut:1000})
-
-      });
-
+      .subscribe(
+        (res) => {
+          console.log('respnse', res);
+          this.toast.success('Updated', 'Status', { timeOut: 1000 });
+        },
+        (err) => {
+          this.toast.error(err.error.message);
+        }
+      );
   }
   change(index: number) {
     this.boolArray[index] = true;

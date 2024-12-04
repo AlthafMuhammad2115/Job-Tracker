@@ -20,24 +20,29 @@ export class AdminJobDetialsComponent {
     private adminserv: AdminService,
     private jobserv: JobService,
     private route: Router,
-    private toast:ToastrService
+    private toast: ToastrService
   ) {
     adminserv
       .adminlistjobs(adminserv.getAdminFromLocalStorage('admin').userid)
-      .subscribe((res: any) => {
-        this.jobid = ar.snapshot.paramMap.get('job_id');
-        this.jobarray = res.jobs;
+      .subscribe(
+        (res: any) => {
+          this.jobid = ar.snapshot.paramMap.get('job_id');
+          this.jobarray = res.jobs;
 
-        if (this.jobid) {
-          this.menudata = this.jobarray.filter((value: any) => {
-            this.lastdate = this.formatDateToDDMMYYYY(value.last_date);
-            this.postdate = this.formatDateToDDMMYYYY(value.posted_date);
-            return value._id == this.jobid;
-          });
+          if (this.jobid) {
+            this.menudata = this.jobarray.filter((value: any) => {
+              this.lastdate = this.formatDateToDDMMYYYY(value.last_date);
+              this.postdate = this.formatDateToDDMMYYYY(value.posted_date);
+              return value._id == this.jobid;
+            });
+          }
+
+          console.log('menudata', this.menudata);
+        },
+        (err) => {
+          this.toast.error(err.error.message);
         }
-
-        console.log('menudata', this.menudata);
-      });
+      );
   }
 
   formatDateToDDMMYYYY(dateString: string): string {
@@ -54,15 +59,19 @@ export class AdminJobDetialsComponent {
   }
 
   deletejob(job_id: any) {
-    this.jobserv.delete_job(job_id).subscribe((res: any) => {
-      if (res.message == 'Job application deleted successfully') {
-        this.route.navigateByUrl(
-          '/adminDashboard/' +
-            this.adminserv.getAdminFromLocalStorage('admin').userid
-        );
-        this.toast.success('','Job Deleted',{timeOut:1000})
-
+    this.jobserv.delete_job(job_id).subscribe(
+      (res: any) => {
+        if (res.message == 'Job application deleted successfully') {
+          this.route.navigateByUrl(
+            '/adminDashboard/' +
+              this.adminserv.getAdminFromLocalStorage('admin').userid
+          );
+          this.toast.success('', 'Job Deleted', { timeOut: 1000 });
+        }
+      },
+      (err) => {
+        this.toast.error(err.statusText);
       }
-    });
+    );
   }
 }

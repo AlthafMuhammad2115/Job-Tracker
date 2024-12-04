@@ -3,7 +3,6 @@
     class="d-flex col-12 flex-column border rounded py-3 px-2 position-relative"
   >
     <div class="position-absolute icon">
-      <!-- <button class="btn btn-outline-dark rounded-0">N</button> -->
       <img src="../../../assets/cmpnylogo.webp" alt="" width="100" />
     </div>
     <div class="job_title">
@@ -12,15 +11,16 @@
     <div class="company_name">
       <p class="h5">{{ company }}</p>
     </div>
+    
     <div class="labels col-8 pt-2">
       <ul class="d-flex justify-content-between flex-wrap">
-        <li>
+        <li class="col-12 col-md-auto d-flex justify-content-start">
           <span><i class="bi bi-geo-alt"></i></span><span>{{ location }}</span>
         </li>
-        <li>
+        <li class="col-12 col-md-auto d-flex justify-content-start">
           <span><i class="bi bi-cash-coin"></i></span><span>{{ salary }}</span>
         </li>
-        <li>
+        <li class="col-12 col-md-auto d-flex justify-content-start">
           <span><i class="bi bi-person"></i></span><span>{{ post }}</span>
         </li>
       </ul>

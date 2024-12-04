@@ -1,5 +1,5 @@
 
-<div class="container main d-md-flex py-3 position-relative">
+<div class=" main container d-md-flex py-3 position-relative">
   <app-filter-box
     (valueSent)="recieveValues($event)"
     class="col-md-4 postion-sticky top-0 d-none d-md-block" 
@@ -31,7 +31,7 @@
 </div>
 
 <app-filter-box
-  class="col-8 small_filter_box position-fixed start-50 translate-middle d-md-none position-relative"
+  class="col-12 small_filter_box position-fixed start-50 translate-middle d-md-none position-relative"
   *ngIf="Isfilteropen"
   (valueSent)="recieveValues($event)"
   >

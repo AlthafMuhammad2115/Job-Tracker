@@ -10,7 +10,7 @@ signup = async (req, res,next) => {
 
         const company = await companySignUpModel.findOne({ email });
         if (company) {
-            res.json({ message: 'Mail ID Already Exist', status: 302 });
+            res.status(302).json({ message: 'Mail ID Already Exist'});
             return
         }
 
@@ -26,7 +26,7 @@ signup = async (req, res,next) => {
 
         const signed_company = await companySignUpModel.findOne({ email: email });
 
-        res.json({ token: generateAdminToken(signed_company), status: 200, userid: signed_company._id, company_name: signed_company.company_name })
+        res.status(200).json({ token: generateAdminToken(signed_company),userid: signed_company._id, company_name: signed_company.company_name })
 
     } catch (error) {
         error.statusCode = 400;
@@ -46,12 +46,12 @@ login = async (req, res,next) => {
             const IsPresent = await comparePassword(password, company.password);
 
             if (IsPresent) {
-                res.status(200).json({ token: generateAdminToken(company), status: 200, userid: company._id, company_name: company.company_name })
+                res.status(200).json({ token: generateAdminToken(company), userid: company._id, company_name: company.company_name })
             } else {
-                res.json({ status: 302, result: 'Password Mismatch' })
+                res.status(302).json({result: 'Password Mismatch' })
             }
         } else {
-            res.json({ status: 400, result: 'Email not found' })
+            res.status(400).json({result: 'Email not found' })
         }
     } catch (error) {
         error.statusCode = 400;

@@ -31,6 +31,7 @@ export class JobTileComponent {
     private toast: ToastrService
   ) {}
   applynow() {
+    if(this.btnName!='APPLY NOW')return;
     let user: any;
     let admin: any;
     admin = this.adminserv.getAdminFromLocalStorage('admin');
@@ -47,14 +48,17 @@ export class JobTileComponent {
     let userid = {
       user_id: user,
     };
-    this.applserv
-      .add_applicant(userid, this.job_id, this.company_id)
-      .subscribe((res) => {
-        this.toast.success('Applied','success', {
+    this.applserv.add_applicant(userid, this.job_id, this.company_id).subscribe(
+      (res) => {
+        this.toast.success('Applied', 'success', {
           timeOut: 1000,
           progressAnimation: 'increasing',
         });
         console.log(res);
-      });
+      },
+      (err) => {
+        this.toast.error(err.statusText);
+      }
+    );
   }
 }
