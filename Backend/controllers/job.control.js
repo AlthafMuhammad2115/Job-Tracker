@@ -144,6 +144,7 @@ filterJobs = async (req, res, next) => {
             });
 
         const jobsWithCompanyName = jobs.map((job) => ({
+            _id: job._id,
             job_id: job._id,
             job_title: job.job_title,
             location: job.location,
@@ -151,6 +152,11 @@ filterJobs = async (req, res, next) => {
             skill: job.skill,
             post_no: job.post_no,
             company_name: job.company_id?.company_name || 'Unknown',
+            notes: job.notes,
+            posted_date: job.posted_date,
+            last_date: job.last_date,
+            createdAt: job.createdAt,
+            updatedAt: job.updatedAt
         }));
 
         return res.status(200).json({
