@@ -20,7 +20,6 @@ export class AdminDashboardComponent {
           console.log(this.jobarray);
         },
         (err) => {
-          this.toast.error(err.error.message);
         }
       );
 
